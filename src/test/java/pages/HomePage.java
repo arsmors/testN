@@ -1,8 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -20,6 +18,7 @@ public class HomePage {
     private final By PRODUCTS_lIST = By.cssSelector(".js-product");
     public String HISTORY = "recent_history/lv/";
     private final By ADD_TO_CART = By.cssSelector(".btn--280");
+    public final By GROZA = By.xpath("//*[@class=\"js-buy-button-text\"]");
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -31,16 +30,27 @@ public class HomePage {
 
     public void viewRandomProductTimes(int times) throws InterruptedException {
         for (int i = 0; i < times; i++) {
+            openCategory();
             viewRandomProduct();
             baseFunc.openPage(homePage);
         }
     }
 
+    public void openCategory() {
+        String Mobiles = "categories/lv/388/sort/1/filter/0_0_0_0/page/" +
+                (new Random().nextInt(30) + 1) + "/Mobilie-telefoni.html";
+        baseFunc.openPage(homePage+Mobiles);
+    }
+
     public void viewRandomProduct() throws InterruptedException {
         Random num = new Random();
         int id = num.nextInt(5);
-        getItems(id).click();
+        try {
+            getItems(id).click();
+        } catch (ElementClickInterceptedException e) {
+            baseFunc.openPage(homePage);
         }
+    }
 
     private WebElement getItems(int id) {
         List<WebElement> items = baseFunc.getElements(PRODUCTS_lIST);
@@ -54,17 +64,31 @@ public class HomePage {
 
     public void addProductToCart() throws InterruptedException {
         Random num = new Random();
-        int id = num.nextInt(5);
-        getItems(id).click();
-        baseFunc.getElement(ADD_TO_CART).click();
+        int id = num.nextInt(10);
+        try {
+            getItems(id).click();
+        } catch (ElementClickInterceptedException e) {
+            addProductToCart();
+        } catch (ElementNotInteractableException e) {
+            addProductToCart();
+        }
+        try {
+            baseFunc.getElement(ADD_TO_CART).click();
+        } catch (ElementNotInteractableException e) {
+            baseFunc.openPage(homePage);
+            addProductToCart();
+        }
     }
 
     public void addRandomProductsToCartTimes(int times) throws InterruptedException {
         for (int i = 0; i < times; i++) {
+            openCategory();
             addProductToCart();
-            baseFunc.openPage(homePage);
+//            baseFunc.openPage(homePage);
         }
     }
+
+
 }
 
 
