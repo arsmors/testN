@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 public class BaseFunc {
 
     public WebDriver driver;
-    private WebDriverWait wait;
 
     public BaseFunc() {
         System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver");
@@ -22,8 +20,6 @@ public class BaseFunc {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
         this.driver = new ChromeDriver(options);
-//        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 3);
     }
 
     public void openPage(String url) {
@@ -38,38 +34,11 @@ public class BaseFunc {
 
     public WebElement getElement(By locator) {
         try {
-//            Assert.assertFalse("Element is not found!", isElementPresent(locator));
             return driver.findElement(locator);
-        } catch (WebDriverException e) {
-            refresh();
-            return driver.findElement(locator);
+        } catch (NoSuchElementException e) {
+            Assert.fail("Element not found");
+            return null;
         }
-//        return driver.findElement(locator);
-    }
-
-//    public void waitForElement(By locator) {
-//        try {
-//            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
-//        } catch (TimeoutException e) {
-//            return
-//        }
-//    }
-
-//    public boolean isElementPresent(By locator) {
-//        waitForElement(locator);
-//        return getElements(locator).isEmpty();
-//    }
-
-//    public WebElement getElement(By locator) {
-//        try {
-//            return driver.findElement(locator);
-//        } catch (NoSuchElementException e) {
-//            Assert.fail("Element not found");
-//            return null;
-//        }
-
-    public void refresh() {
-        driver.navigate().refresh();
     }
 
     public void closePage() {

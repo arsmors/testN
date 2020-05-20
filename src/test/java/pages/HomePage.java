@@ -10,8 +10,7 @@ public class HomePage {
     public String homePage = "https://www.rdveikals.lv/";
     private final By PRODUCTS_lIST = By.cssSelector(".js-product");
     private final By ADD_TO_CART = By.cssSelector(".btn--280");
-
-
+    
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
     }
@@ -57,20 +56,9 @@ public class HomePage {
     public void addProductToCart() throws InterruptedException {
         Random num = new Random();
         int id = num.nextInt(10);
-        try {
-            getItems(id).click();
-        } catch (ElementClickInterceptedException e) {
-            getItems(id).click();
-        } catch (ElementNotInteractableException e) {
-            addProductToCart();
-        }
+        getItems(id).click();
         scrollToElement();
-        try {
-            baseFunc.getElement(ADD_TO_CART).click();
-        } catch (ElementNotInteractableException e) {
-            openCategory();
-            addProductToCart();
-        }
+        baseFunc.getElement(ADD_TO_CART).click();
     }
 
     public void scrollToElement() {

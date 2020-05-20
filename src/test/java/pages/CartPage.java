@@ -4,11 +4,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static jdk.nashorn.internal.objects.NativeMath.round;
 import static org.junit.Assert.assertEquals;
 
@@ -32,21 +30,18 @@ public class CartPage {
         List<String> listNoDuplicates = Lists.newArrayList(Sets.newHashSet(strings));
         listNoDuplicates.removeAll(Arrays.asList(""));
 
-        double[] floatArray = new double[listNoDuplicates.size()];
+        double[] doubleArray = new double[listNoDuplicates.size()];
         for (int i = 0 ; i < listNoDuplicates.size(); i++) {
-            floatArray[i] = Double.parseDouble(listNoDuplicates.get(i));
+            doubleArray[i] = Double.parseDouble(listNoDuplicates.get(i));
         }
 
         double sum = 0;
-        for (int i = 0; i < floatArray.length; i++) {
-            sum =  sum + floatArray[i];
-
+        for (int i = 0; i < doubleArray.length; i++) {
+            sum =  sum + doubleArray[i];
         }
 
-        String total = (baseFunc.getElement(TOTAL_PRICE)).getText();
-        Double total2 = Double.parseDouble(total);
-
-        assertEquals("total sum is incorrect", round(sum, 2), round(total2, 2), 0);
+        Double total = Double.parseDouble((baseFunc.getElement(TOTAL_PRICE)).getText());
+        assertEquals("total sum is incorrect", round(sum, 2), round(total, 2), 0);
     }
 
     public void removeRandomProductsfromCartTimes(int times) throws InterruptedException {
