@@ -5,9 +5,9 @@ Feature: C description
     And add <products> different products to the cart
     Then total sum is correct
     When user remove any <items> different products
-#    Then products are removed from the cart
-#    And total sum is correct
+    Then products qty is <qty> in the cart
+    And total sum is correct
 
     Examples:
-      | products | items |
-      | 3        | 2     |
+      | products | items | qty |
+      | 5        | 2     | 3   |

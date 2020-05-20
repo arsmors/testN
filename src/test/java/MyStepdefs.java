@@ -45,4 +45,9 @@ public class MyStepdefs {
     public void userRemoveAnyItemsDifferentProducts(int items) throws InterruptedException {
         homePage.removeRandomProductsfromCartTimes(items);
     }
+
+    @Then("products qty is {int} in the cart")
+    public void productsQtyIsQtyInTheCart(int qty) {
+        homePage.qtyInCart(qty);
+    }
 }

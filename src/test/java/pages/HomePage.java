@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.*;
 
+import static jdk.nashorn.internal.objects.NativeMath.round;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -25,6 +26,7 @@ public class HomePage {
     public final By PRICE = By.xpath("//p[@class=\"price\"]/b");
     public final By TOTAL_PRICE = By.xpath("//*[@id=\"total_products_num_price\"]");
     private final By REMOVE = By.cssSelector(".product__controls--small > a");
+    private final By CART_PRODUCTS = By.cssSelector(".cart-product-list > .product");
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -122,7 +124,7 @@ public class HomePage {
         String total = (baseFunc.getElement(TOTAL_PRICE)).getText();
         Double total2 = Double.parseDouble(total);
 
-        assertEquals("total sum is correct", sum, total2, 0);
+        assertEquals("total sum is incorrect", round(sum, 2), round(total2, 2), 0);
     }
 
     public void removeRandomProductsfromCartTimes(int times) throws InterruptedException {
@@ -133,6 +135,11 @@ public class HomePage {
 
     public void removeProductFromCart() throws InterruptedException {
         baseFunc.getElement(REMOVE).click();
+    }
+
+    public void qtyInCart(int qty) {
+        List<WebElement> listOfElements = baseFunc.getElements(CART_PRODUCTS);
+        assertEquals("total qty of products in cart is incorrect", listOfElements.size(), qty, 0);
     }
 }
 
