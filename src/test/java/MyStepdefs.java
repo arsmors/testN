@@ -34,4 +34,11 @@ public class MyStepdefs {
 
     }
 
+    @Then("total sum is correct")
+    public void totalSumIsCorrect() {
+        homePage.openHomePage("cart/lv/");
+        homePage.checkTotal();
+
+
+    }
 }

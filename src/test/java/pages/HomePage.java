@@ -1,15 +1,17 @@
 package pages;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import io.cucumber.java.eo.Do;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class HomePage {
@@ -20,6 +22,8 @@ public class HomePage {
     public String HISTORY = "recent_history/lv/";
     private final By ADD_TO_CART = By.cssSelector(".btn--280");
     public final By GROZA = By.xpath("//*[@class=\"js-buy-button-text\"]");
+    public final By PRICE = By.xpath("//p[@class=\"price\"]/b");
+    public final By TOTAL_PRICE = By.xpath("//*[@id=\"total_products_num_price\"]");
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -95,7 +99,32 @@ public class HomePage {
         }
     }
 
+    public void checkTotal() {
+        List<WebElement> listOfElements = baseFunc.getElements(PRICE);
+        List<String> strings = new ArrayList<String>();
 
+        listOfElements.stream().map(WebElement::getText).forEach(strings::add);
+        List<String> listNoDuplicates = Lists.newArrayList(Sets.newHashSet(strings));
+        listNoDuplicates.removeAll(Arrays.asList(""));
+
+        float[] floatArray = new float[listNoDuplicates.size()];
+        for (int i = 0 ; i < listNoDuplicates.size(); i++) {
+            floatArray[i] = Float.parseFloat(listNoDuplicates.get(i));
+        }
+
+        float sum = 0;
+        for (int i = 0; i < floatArray.length; i++) {
+            sum =  sum + floatArray[i];
+
+        }
+
+        String total = (baseFunc.getElement(TOTAL_PRICE)).getText();
+        float total2 = Float.parseFloat(total);
+
+        assertEquals("total sum is correct", sum, total2, 0);
+
+
+    }
 }
 
 
