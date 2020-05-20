@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static org.junit.Assert.assertFalse;
+
 public class HomePage {
     BaseFunc baseFunc;
 
     public String homePage = "https://www.rdveikals.lv/";
     private final By PRODUCTS_lIST = By.cssSelector(".js-touch-hover");
+    public String HISTORY = "recent_history/lv/";
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -41,6 +44,11 @@ public class HomePage {
     private WebElement getItems(int id) {
         List<WebElement> items = baseFunc.getElements(PRODUCTS_lIST);
         return items.get(id);
+    }
+
+    public void checkProductsDisplayedOnPage() {
+        List<WebElement> listOfElements = baseFunc.getElements(PRODUCTS_lIST);
+        assertFalse("ads are not displayed on page", listOfElements.isEmpty());
     }
 }
 

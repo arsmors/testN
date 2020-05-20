@@ -1,4 +1,5 @@
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.BaseFunc;
 import pages.HomePage;
@@ -19,4 +20,11 @@ public class MyStepdefs {
         homePage.viewRandomProductTimes(times);
     }
 
+    @Then("products are visible in the history views")
+    public void productsAreVisibleInTheHistoryViews() {
+        homePage.openHomePage("recent_history/lv/");
+        homePage.checkProductsDisplayedOnPage();
+
+
+    }
 }
