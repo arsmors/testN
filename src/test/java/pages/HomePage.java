@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +38,8 @@ public class HomePage {
     }
 
     public void openCategory() {
-        String Mobiles = "categories/lv/388/sort/1/filter/0_0_0_0/page/" +
-                (new Random().nextInt(30) + 1) + "/Mobilie-telefoni.html";
+        String Mobiles = "categories/lv/388/sort/1/filter/0_0_0_0/" + "/page/" +
+                (new Random().nextInt(20) + 1) + "/Mobilie-telefoni.html";
         baseFunc.openPage(homePage+Mobiles);
     }
 
@@ -68,16 +69,22 @@ public class HomePage {
         try {
             getItems(id).click();
         } catch (ElementClickInterceptedException e) {
-            addProductToCart();
+            getItems(id).click();
         } catch (ElementNotInteractableException e) {
             addProductToCart();
         }
+        scrollToElement();
         try {
             baseFunc.getElement(ADD_TO_CART).click();
         } catch (ElementNotInteractableException e) {
-            baseFunc.openPage(homePage);
+            openCategory();
             addProductToCart();
         }
+    }
+
+    public void scrollToElement() {
+        JavascriptExecutor js = (JavascriptExecutor) baseFunc.driver;
+        js.executeScript("javascript:window.scrollBy(250,350)");
     }
 
     public void addRandomProductsToCartTimes(int times) throws InterruptedException {
