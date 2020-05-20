@@ -24,6 +24,7 @@ public class HomePage {
     public final By GROZA = By.xpath("//*[@class=\"js-buy-button-text\"]");
     public final By PRICE = By.xpath("//p[@class=\"price\"]/b");
     public final By TOTAL_PRICE = By.xpath("//*[@id=\"total_products_num_price\"]");
+    private final By REMOVE = By.cssSelector(".product__controls--small > a");
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -107,23 +108,31 @@ public class HomePage {
         List<String> listNoDuplicates = Lists.newArrayList(Sets.newHashSet(strings));
         listNoDuplicates.removeAll(Arrays.asList(""));
 
-        float[] floatArray = new float[listNoDuplicates.size()];
+        double[] floatArray = new double[listNoDuplicates.size()];
         for (int i = 0 ; i < listNoDuplicates.size(); i++) {
-            floatArray[i] = Float.parseFloat(listNoDuplicates.get(i));
+            floatArray[i] = Double.parseDouble(listNoDuplicates.get(i));
         }
 
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < floatArray.length; i++) {
             sum =  sum + floatArray[i];
 
         }
 
         String total = (baseFunc.getElement(TOTAL_PRICE)).getText();
-        float total2 = Float.parseFloat(total);
+        Double total2 = Double.parseDouble(total);
 
         assertEquals("total sum is correct", sum, total2, 0);
+    }
 
+    public void removeRandomProductsfromCartTimes(int times) throws InterruptedException {
+        for (int i = 0; i < times; i++) {
+            removeProductFromCart();
+        }
+    }
 
+    public void removeProductFromCart() throws InterruptedException {
+        baseFunc.getElement(REMOVE).click();
     }
 }
 

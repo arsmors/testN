@@ -38,7 +38,11 @@ public class MyStepdefs {
     public void totalSumIsCorrect() {
         homePage.openHomePage("cart/lv/");
         homePage.checkTotal();
+    }
 
 
+    @When("user remove any {int} different products")
+    public void userRemoveAnyItemsDifferentProducts(int items) throws InterruptedException {
+        homePage.removeRandomProductsfromCartTimes(items);
     }
 }
