@@ -17,8 +17,9 @@ public class HomePage {
     BaseFunc baseFunc;
 
     public String homePage = "https://www.rdveikals.lv/";
-    private final By PRODUCTS_lIST = By.cssSelector(".js-touch-hover");
+    private final By PRODUCTS_lIST = By.cssSelector(".js-product");
     public String HISTORY = "recent_history/lv/";
+    private final By ADD_TO_CART = By.cssSelector(".btn--280");
 
     public HomePage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -31,6 +32,7 @@ public class HomePage {
     public void viewRandomProductTimes(int times) throws InterruptedException {
         for (int i = 0; i < times; i++) {
             viewRandomProduct();
+            baseFunc.openPage(homePage);
         }
     }
 
@@ -38,7 +40,6 @@ public class HomePage {
         Random num = new Random();
         int id = num.nextInt(5);
         getItems(id).click();
-        baseFunc.openPage(homePage);
         }
 
     private WebElement getItems(int id) {
@@ -50,24 +51,21 @@ public class HomePage {
         List<WebElement> listOfElements = baseFunc.getElements(PRODUCTS_lIST);
         assertFalse("ads are not displayed on page", listOfElements.isEmpty());
     }
+
+    public void addProductToCart() throws InterruptedException {
+        Random num = new Random();
+        int id = num.nextInt(5);
+        getItems(id).click();
+        baseFunc.getElement(ADD_TO_CART).click();
+    }
+
+    public void addRandomProductsToCartTimes(int times) throws InterruptedException {
+        for (int i = 0; i < times; i++) {
+            addProductToCart();
+            baseFunc.openPage(homePage);
+        }
+    }
 }
-
-//    public void viewProduct(int id) throws InterruptedException {
-////        Random num = new Random();
-////        int id = num.nextInt(5);
-//        for (int i = 0; i < id; i++) {
-//            List<WebElement> items = baseFunc.getElements(PRODUCTS_lIST);
-//            for (int j = 0; j < items.size(); j++) {
-//                items.get(i).click();
-//                baseFunc.openPage(homePage);
-//            }
-//        }
-//    }
-
-//    public void viewProductTimes(int times) {
-//        for (int i = 0; i < times; i++) {
-//            viewProduct();
-//        }
 
 
 

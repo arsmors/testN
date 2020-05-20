@@ -27,4 +27,11 @@ public class MyStepdefs {
 
 
     }
+
+    @And("add {int} different products to the cart")
+    public void addProductsDifferentProductsToTheCart(int times) throws InterruptedException {
+        homePage.addRandomProductsToCartTimes(times);
+
+    }
+
 }
