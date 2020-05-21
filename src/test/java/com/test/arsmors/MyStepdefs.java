@@ -1,9 +1,11 @@
+package com.test.arsmors;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pages.BaseFunc;
-import pages.CartPage;
-import pages.HomePage;
+import com.test.arsmors.pages.BaseFunc;
+import com.test.arsmors.pages.CartPage;
+import com.test.arsmors.pages.HomePage;
 
 public class MyStepdefs {
     BaseFunc baseFunc = new BaseFunc();
