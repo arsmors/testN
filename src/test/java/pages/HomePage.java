@@ -1,4 +1,4 @@
-package com.test.arsmors.pages;
+package pages;
 
 import org.openqa.selenium.*;
 import java.util.*;

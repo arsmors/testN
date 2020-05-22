@@ -1,4 +1,4 @@
-package com.test.arsmors.pages;
+package pages;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
