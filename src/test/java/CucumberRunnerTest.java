@@ -1,12 +1,13 @@
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.junit.runner.RunWith;
 
-@RunWith(Cucumber.class)
+//@RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        plugin ={"pretty", "html:target/html","json:target/json/output.json"},
-        glue = {"steps"})
+        plugin ="pretty",
+        glue = "steps")
 
-public class CucumberRunnerTest {
+public class CucumberRunnerTest extends AbstractTestNGCucumberTests {
 }
